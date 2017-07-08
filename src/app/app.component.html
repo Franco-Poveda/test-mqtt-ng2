@@ -1,4 +1,29 @@
 <div class="container">
-  <h1>Angular 2 Message Queue Demo</h1>
-  <app-rawdata></app-rawdata>
+<div>
+  <md-toolbar color="primary">
+    <img class="img-responsive" src="assets/images/charge.png">
+
+    <span></span>
+      <app-mq-status></app-mq-status>
+
+
+    <button md-icon-button [md-menu-trigger-for]="menu" >
+      <md-icon>more_vert</md-icon>
+    </button>
+  </md-toolbar>
+  <md-menu x-position="before" #menu="mdMenu">
+    <button md-menu-item>Option 1</button>
+    <button md-menu-item>Option 2</button>
+  </md-menu>
+<button (click)="rawDataComp.actualizar('asdasdasd')">click me</button>
+  <md-card>
+    <app-rawdata #rawDataComp></app-rawdata>
+  </md-card>
+
+  <span class="done">
+    <button md-fab>
+      <md-icon>check circle</md-icon>
+    </button>
+  </span>
+</div>  
 </div>

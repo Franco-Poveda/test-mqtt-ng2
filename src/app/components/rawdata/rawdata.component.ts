@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Packet } from 'mqtt';
 
 import { MQTTService } from '../../services/mqtt';
 import { ConfigService } from '../../services/config/config.service';
+import { StatusComponent } from "app/components/status/status.component";
 
 /**
  * This component is an example implementation which uses
@@ -23,13 +25,21 @@ import { ConfigService } from '../../services/config/config.service';
   styleUrls: ['./rawdata.component.css'],
   providers: [MQTTService, ConfigService]
 })
-export class RawDataComponent implements OnInit, OnDestroy {
+export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
+    ngAfterViewInit(): void {
+        console.log("view init");
+    }
+
+  @ViewChild(StatusComponent)
+  public miStatusHijo:StatusComponent;
 
   // Stream of messages
   public messages: Observable<Packet>;
 
   // Array of historic message (bodies)
   public mq: Array<string> = [];
+
+  private statusComp: StatusComponent;
 
   // A count of messages received
   public count = 0;
@@ -50,6 +60,7 @@ export class RawDataComponent implements OnInit, OnDestroy {
       }
     );
   }
+
 
   ngOnDestroy() {
     this._mqService.disconnect();
@@ -78,5 +89,9 @@ export class RawDataComponent implements OnInit, OnDestroy {
 
   public on_error = () => {
     console.error('Ooops, error in RawDataComponent');
+  }
+
+  public actualizar = (textos:string) => {
+      this.miStatusHijo.miVar = textos;
   }
 }

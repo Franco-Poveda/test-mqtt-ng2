@@ -2,27 +2,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MaterialModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { RawDataComponent } from './components/rawdata/rawdata.component';
 import { StatusComponent } from './components/status/status.component';
 import { ReversePipe } from './pipes/reverse.pipe';
-
+import { MQTTService } from './services/mqtt';
 import { ConfigService } from './services/config/config.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RawDataComponent,
-    StatusComponent,
-    ReversePipe
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
-  ],
-  providers: [ConfigService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        RawDataComponent,
+        StatusComponent,
+        ReversePipe
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        MaterialModule,
+        BrowserAnimationsModule
+    ],
+    providers: [
+        MQTTService,
+        ConfigService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,6 +15,8 @@ export class StatusComponent implements OnInit {
 
   public state: Observable<string>;
 
+  public miVar:string = "hola";
+
   constructor(private _mqService: MQTTService) { }
 
   ngOnInit() {

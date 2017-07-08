@@ -2,15 +2,16 @@
     "port": 15675,
     "path": "ws",
     "ssl": false,
+    "host": "localhost",
 
     "user": "guest",
     "pass": "guest",
 
     "subscribe": [
-        "Test"
+        "controller"
     ],
     "publish": [
-        "Test"
+        "params"
     ],
 
     "keepalive": 10
