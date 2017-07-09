@@ -91,7 +91,7 @@ export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
     console.error('Ooops, error in RawDataComponent');
   }
 
-  public actualizar = (textos:string) => {
-      this._mqService.publish('12121212');
+  public actualizar = (pines:string) => {
+      this._mqService.publish(pines);
   }
 }

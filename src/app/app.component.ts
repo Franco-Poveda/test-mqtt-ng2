@@ -14,17 +14,23 @@ import { Observable } from "rxjs/Observable";
 })
 export class AppComponent {
       public publish: Function;
+      public currentO1: number[];
+      public currentO2: number[];
 
       constructor(public _mqService: MQTTService) {    
           this.publish = _mqService.publish;
  }
-      A1 = false;
-  A2 = false;
-  A3 = false;
-  A4 = false;
-  B1 = false;
-  B2 = false;
-  B3 = false;
-  B4 = false;
+ public setDigitalOutput() {
+
+    console.dir(this.currentO1);
+    var sum = this.currentO1.reduce(function(valorAnterior, valorActual, indice, vector){
+  return Number(valorAnterior) + Number(valorActual);
+});
+console.log(sum);
+    console.log(Number(sum).toString(2));
+
+
+
+ }
 
  }
