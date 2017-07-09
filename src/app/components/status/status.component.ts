@@ -17,8 +17,8 @@ export class StatusComponent implements OnInit {
 
   public miVar:string = "hola";
 
-  constructor(private _mqService: MQTTService) { }
-
+  constructor(public _mqService: MQTTService) { }
+  
   ngOnInit() {
     this.state = this._mqService.state
       .map((state: number) => TransportState[state]);

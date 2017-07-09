@@ -22,22 +22,39 @@
   <md-card-content>
     <h2 class="example-h2">Digital Ouputs:</h2>
 
-    <section class="example-section">
-      <md-checkbox class="example-margin" [(ngModel)]="A1"></md-checkbox>
-      <md-checkbox class="example-margin" [(ngModel)]="A2"></md-checkbox>
-      <md-checkbox class="example-margin" [(ngModel)]="A3"></md-checkbox>
-      <md-checkbox class="example-margin" [(ngModel)]="A4"></md-checkbox>
-
-    </section>
-
         <section class="example-section">
-      <md-checkbox class="example-margin" [(ngModel)]="B1"></md-checkbox>
-      <md-checkbox class="example-margin" [(ngModel)]="B2"></md-checkbox>
-      <md-checkbox class="example-margin" [(ngModel)]="B3"></md-checkbox>
-      <md-checkbox class="example-margin" [(ngModel)]="B4"></md-checkbox>
+
+          <md2-select name="A"
+                  multiple
+                  placeholder="Digital Output 1"
+                  [(ngModel)]="currentO1"
+                  [required]="false"
+                  [disabled]="false">
+        <md2-option value="1"> A1 </md2-option>
+        <md2-option value="2"> A2 </md2-option>
+        <md2-option value="4"> A3 </md2-option>
+        <md2-option value="8"> A4 </md2-option>
+
+      </md2-select>
+            <p> Value: {{ currentO1 }} </p>
+
+                <md2-select name="B"
+                  multiple
+                  placeholder="Digital Output 2"
+                  [(ngModel)]="currentO2"
+                  [required]="false"
+                  [disabled]="false">
+        <md2-option value="1"> B1 </md2-option>
+        <md2-option value="2"> B2 </md2-option>
+        <md2-option value="4"> B3 </md2-option>
+        <md2-option value="8"> B4 </md2-option>
+
+      </md2-select>
+            <p> Value: {{ currentO2 }} </p>
 
     </section>
-        <button md-fab (click)="rawDataComp.actualizar('1010100101')"><md-icon>check</md-icon></button>
+
+        <button md-fab (click)="setDigitalOutput()"><md-icon>check</md-icon></button>
 
   </md-card-content>
 </md-card>

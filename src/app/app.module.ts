@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Md2Module }  from 'md2';
 
 import { AppComponent } from './app.component';
 import { RawDataComponent } from './components/rawdata/rawdata.component';
@@ -24,6 +25,7 @@ import { ConfigService } from './services/config/config.service';
         FormsModule,
         HttpModule,
         MaterialModule,
+        Md2Module,
         BrowserAnimationsModule
     ],
     providers: [

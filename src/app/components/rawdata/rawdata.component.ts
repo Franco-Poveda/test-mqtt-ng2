@@ -56,6 +56,7 @@ export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this._mqService.onConnected.unsubscribe();
     this._mqService.onError.unsubscribe();
+    this._mqService.messages.unsubscribe();
   }
 
   /** Callback on_connect to queue */
@@ -82,7 +83,7 @@ export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
     console.error('Ooops, error in RawDataComponent');
   }
 
-  public actualizar = (textos:string) => {
-      this._mqService.publish('12121212');
+  public actualizar = (pines:string) => {
+      this._mqService.publish(pines);
   }
 }
