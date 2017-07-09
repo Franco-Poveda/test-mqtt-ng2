@@ -20,7 +20,6 @@ export class StatusComponent implements OnInit {
   constructor(private _mqService: MQTTService) { }
 
   ngOnInit() {
-    console.log('Status init');
     this.state = this._mqService.state
       .map((state: number) => TransportState[state]);
   }

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Packet } from 'mqtt';
 
 import { MQTTService } from '../../services/mqtt';
-import { ConfigService } from '../../services/config/config.service';
-import { StatusComponent } from "app/components/status/status.component";
+import { StatusComponent } from 'app/components/status/status.component';
 
 /**
  * This component is an example implementation which uses
@@ -22,59 +21,51 @@ import { StatusComponent } from "app/components/status/status.component";
 @Component({
   selector: 'app-rawdata',
   templateUrl: './rawdata.component.html',
-  styleUrls: ['./rawdata.component.css'],
-  providers: [MQTTService, ConfigService]
+  styleUrls: ['./rawdata.component.css']
 })
 export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
-    ngAfterViewInit(): void {
-        console.log("view init");
-    }
+  message: string;
 
   @ViewChild(StatusComponent)
   public miStatusHijo:StatusComponent;
 
   // Stream of messages
-  public messages: Observable<Packet>;
+  public messages:Observable<Packet>;
 
   // Array of historic message (bodies)
   public mq: Array<string> = [];
 
-  private statusComp: StatusComponent;
 
   // A count of messages received
   public count = 0;
 
   /** Constructor */
-  constructor(private _mqService: MQTTService,
-    private _configService: ConfigService) { }
+  constructor(private _mqService: MQTTService) { }
 
   ngOnInit() {
-    // Get configuration from config service...
-    this._configService.getConfig('api/config.json').then(
-      config => {
-        // ... then pass it to (and connect) the message queue:
-        this._mqService.configure(config);
-        this._mqService.try_connect()
-          .then(this.on_connect)
-          .catch(this.on_error);
-      }
-    );
+    this._mqService.onConnected.subscribe(this.onServiceConnected);
+    this._mqService.onError.subscribe(this.on_error);
+    // Subscribe a function to be run on_next message
+    this._mqService.messages.subscribe(this.on_next);
   }
+
+  ngAfterViewInit(): void {
+    }
 
 
   ngOnDestroy() {
-    this._mqService.disconnect();
+    this._mqService.onConnected.unsubscribe();
+    this._mqService.onError.unsubscribe();
   }
 
   /** Callback on_connect to queue */
-  public on_connect = () => {
+  public onServiceConnected = () => {
 
     // Store local reference to Observable
     // for use with template ( | async )
     this.messages = this._mqService.messages;
 
-    // Subscribe a function to be run on_next message
-    this.messages.subscribe(this.on_next);
+
   }
 
   /** Consume a message from the _mqService */
@@ -82,7 +73,7 @@ export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Store message in "historic messages" queue
     this.mq.push(message.toString() + '\n');
-
+    this.message = message.toString();
     // Count it
     this.count++;
   }

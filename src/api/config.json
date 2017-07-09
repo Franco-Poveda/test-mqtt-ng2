@@ -2,7 +2,7 @@
     "port": 15675,
     "path": "ws",
     "ssl": false,
-    "host": "localhost",
+    "host": "192.168.88.249",
 
     "user": "guest",
     "pass": "guest",

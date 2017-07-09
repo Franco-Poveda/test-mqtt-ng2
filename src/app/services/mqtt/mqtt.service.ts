@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy, EventEmitter } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -8,6 +8,7 @@ import { Config } from '../config';
 import { TransportService, TransportState } from './transport.service';
 
 import * as mqtt from 'mqtt';
+import { ConfigService } from "app/services/config/config.service";
 
 
 /**
@@ -20,10 +21,11 @@ import * as mqtt from 'mqtt';
  * into a Subject observable.
  */
 @Injectable()
-export class MQTTService implements TransportService {
+export class MQTTService implements TransportService, OnDestroy {
 
   /* Service parameters */
-
+  public onConnected = new EventEmitter();
+  public onError = new EventEmitter();
   // State of the MQService
   public state: BehaviorSubject<TransportState>;
 
@@ -39,10 +41,22 @@ export class MQTTService implements TransportService {
   // Resolve Promise made to calling class, when connected
   private resolvePromise: (...args: any[]) => void;
 
+
   /** Constructor */
-  public constructor(@Inject(DOCUMENT) private _document: any) {
+  public constructor(@Inject(DOCUMENT) private _document: any,
+                      private configService: ConfigService) {
+
     this.messages = new Subject<mqtt.Packet>();
     this.state = new BehaviorSubject<TransportState>(TransportState.CLOSED);
+    // Get configuration from config service...
+    this.configService.getConfig('api/config.json').then(
+      config => {
+        // ... then pass it to (and connect) the message queue:
+        this.config = config;
+        this.configure(config);
+        this.try_connect();
+      }
+    );
   }
 
 
@@ -130,6 +144,13 @@ export class MQTTService implements TransportService {
     }
   }
 
+  ngOnDestroy() {
+    this.disconnect();
+        // Clear callback
+    this.resolvePromise = null;
+
+  }
+
 
   /** Send a message to all topics */
   public publish(message?: string) {
@@ -169,7 +190,7 @@ export class MQTTService implements TransportService {
       console.log.apply(console, args);
     }
   }
-  
+
   // Callback run on successfully connecting to server
   public on_reconnect = () => {
     this.debug('on_reconnect');
@@ -188,22 +209,18 @@ export class MQTTService implements TransportService {
 
     this.debug(typeof this.resolvePromise);
 
+    this.onConnected.emit();
+
     // Resolve our Promise to the caller
     this.resolvePromise();
 
-    // Clear callback
-    this.resolvePromise = null;
   }
 
 
   // Handle errors
   public on_error = (error: any) => {
 
-    console.error('on_error');
-    console.error(error);
-
     if (typeof error === 'undefined') {
-      this.debug('Undefined error');
       this.state.next(TransportState.TRYING);
       return;
     }
@@ -214,6 +231,8 @@ export class MQTTService implements TransportService {
       // Reset state indicator
       this.state.next(TransportState.CLOSED);
     }
+
+    this.onError.emit();
   }
 
 

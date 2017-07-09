@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open --port 4200 --ssl false",
-    "build": "ng build",
+    "start": "ng serve --open --port 4200 --ssl false --dev",
+    "build": "ng build --dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.2.5",
+    "@angular/cdk": "^2.0.0-beta.8",
     "@angular/common": "^4.2.5",
     "@angular/compiler": "^4.2.5",
     "@angular/compiler-cli": "^4.2.5",
