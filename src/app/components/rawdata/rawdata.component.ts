@@ -92,6 +92,6 @@ export class RawDataComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public actualizar = (textos:string) => {
-      this.miStatusHijo.miVar = textos;
+      this._mqService.publish('12121212');
   }
 }

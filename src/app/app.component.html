@@ -19,6 +19,29 @@
   <md-card>
     <app-rawdata #rawDataComp></app-rawdata>
   </md-card>
+<md-card>
+  <md-card-content>
+    <h2 class="example-h2">Digital Ouputs:</h2>
+
+    <section class="example-section">
+      <md-checkbox class="example-margin" [(ngModel)]="A1"></md-checkbox>
+      <md-checkbox class="example-margin" [(ngModel)]="A2"></md-checkbox>
+      <md-checkbox class="example-margin" [(ngModel)]="A3"></md-checkbox>
+      <md-checkbox class="example-margin" [(ngModel)]="A4"></md-checkbox>
+
+    </section>
+
+        <section class="example-section">
+      <md-checkbox class="example-margin" [(ngModel)]="B1"></md-checkbox>
+      <md-checkbox class="example-margin" [(ngModel)]="B2"></md-checkbox>
+      <md-checkbox class="example-margin" [(ngModel)]="B3"></md-checkbox>
+      <md-checkbox class="example-margin" [(ngModel)]="B4"></md-checkbox>
+
+    </section>
+        <button md-fab (click)="rawDataComp.actualizar('1010100101')"><md-icon>check</md-icon></button>
+
+  </md-card-content>
+</md-card>
 
   <span class="done">
     <button md-fab>

@@ -169,7 +169,7 @@ export class MQTTService implements TransportService {
       console.log.apply(console, args);
     }
   }
-
+  
   // Callback run on successfully connecting to server
   public on_reconnect = () => {
     this.debug('on_reconnect');
@@ -228,7 +228,6 @@ export class MQTTService implements TransportService {
     this.debug(topic);
     this.debug(message);
     // this.debug(packet.messageId);
-    this.publish("100011101");
     if (message.toString()) {
       this.messages.next(message);
     } else {
