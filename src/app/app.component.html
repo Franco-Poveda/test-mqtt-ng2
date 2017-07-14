@@ -1,68 +1,59 @@
 <div class="container">
-<div>
-  <md-toolbar color="primary">
-    <img class="img-responsive" src="assets/images/charge.png">
+    <div>
+        <md-toolbar color="primary">
+            <img class="img-responsive" src="assets/images/charge.png">
 
-    <span></span>
-      <app-mq-status></app-mq-status>
+            <span></span>
+            <app-mq-status></app-mq-status>
 
 
-    <button md-icon-button [md-menu-trigger-for]="menu" >
+            <button md-icon-button [md-menu-trigger-for]="menu">
       <md-icon>more_vert</md-icon>
     </button>
-  </md-toolbar>
-  <md-menu x-position="before" #menu="mdMenu">
-    <button md-menu-item>Option 1</button>
-    <button md-menu-item>Option 2</button>
-  </md-menu>
-  <md-card>
-    <app-rawdata #rawDataComp></app-rawdata>
-  </md-card>
-<md-card>
-  <md-card-content>
-    <h2 class="example-h2">Digital Ouputs:</h2>
+        </md-toolbar>
+        <md-menu x-position="before" #menu="mdMenu">
+            <button md-menu-item>Option 1</button>
+            <button md-menu-item>Option 2</button>
+        </md-menu>
+        <md-card>
+            <app-rawdata #rawDataComp></app-rawdata>
+        </md-card>
+        <md-card>
+            <md-card-content>
+                <h2 class="example-h2">Digital Ouputs:</h2>
 
-        <section class="example-section">
 
-          <md2-select name="A"
-                  multiple
-                  placeholder="Digital Output 1"
-                  [(ngModel)]="currentO1"
-                  [required]="false"
-                  [disabled]="false">
-        <md2-option value="1"> A1 </md2-option>
-        <md2-option value="2"> A2 </md2-option>
-        <md2-option value="4"> A3 </md2-option>
-        <md2-option value="8"> A4 </md2-option>
+                <section class="example-section">
+                    <md-slide-toggle [(ngModel)]="a1" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        A1
+                    </md-slide-toggle>
+                    <md-slide-toggle [(ngModel)]="a2" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        A2
+                    </md-slide-toggle>
+                    <md-slide-toggle [(ngModel)]="a3" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        A3
+                    </md-slide-toggle>
+                    <md-slide-toggle [(ngModel)]="a4" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        A4
+                    </md-slide-toggle>
+                </section>
+                <section class="example-section">
+                    <md-slide-toggle [(ngModel)]="b1" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        B1
+                    </md-slide-toggle>
+                    <md-slide-toggle [(ngModel)]="b2" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        B2
+                    </md-slide-toggle>
+                    <md-slide-toggle [(ngModel)]="b3" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        B3 </md-slide-toggle>
+                    <md-slide-toggle [(ngModel)]="b4" class="example-margin" [color]="color" [checked]="checked" [disabled]="disabled">
+                        B4 </md-slide-toggle>
+                </section>
 
-      </md2-select>
-            <p> Value: {{ currentO1 }} </p>
+                <button md-fab (click)="setDigitalOutput(a1, a2, a3, a4, b1, b2, b3, b4)"><md-icon>build</md-icon></button>
 
-                <md2-select name="B"
-                  multiple
-                  placeholder="Digital Output 2"
-                  [(ngModel)]="currentO2"
-                  [required]="false"
-                  [disabled]="false">
-        <md2-option value="1"> B1 </md2-option>
-        <md2-option value="2"> B2 </md2-option>
-        <md2-option value="4"> B3 </md2-option>
-        <md2-option value="8"> B4 </md2-option>
+            </md-card-content>
+        </md-card>
 
-      </md2-select>
-            <p> Value: {{ currentO2 }} </p>
-
-    </section>
-
-        <button md-fab (click)="setDigitalOutput()"><md-icon>check</md-icon></button>
-
-  </md-card-content>
-</md-card>
-
-  <span class="done">
-    <button md-fab>
-      <md-icon>check circle</md-icon>
-    </button>
-  </span>
-</div>
+    </div>
 </div>
